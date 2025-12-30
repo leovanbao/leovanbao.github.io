@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Free Fire Spin Demo</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  font-family:Arial;
+  color:white;
+}
+
+/* Khung 16:9 */
+.game{
+  position:relative;
+  width:100vw;
+  max-width:177.78vh;
+  height:56.25vw;
+  max-height:100vh;
+  overflow:hidden;
+}
+
+.screen{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:none;
+}
+.screen.active{display:block;}
+
+.bg{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* Nút */
+.btn{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:6%;
+  padding:15px 40px;
+  font-size:22px;
+  font-weight:bold;
+  background:linear-gradient(#ffe066,#ffb300);
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  box-shadow:0 0 25px gold;
+}
+
+.btn-right{
+  position:absolute;
+  right:4%;
+  bottom:6%;
+  padding:12px 26px;
+  font-size:18px;
+  font-weight:bold;
+  background:linear-gradient(#ffe066,#ffb300);
+  border:none;
+  border-radius:22px;
+  cursor:pointer;
+}
+
+/* HUD */
+.hud{
+  position:absolute;
+  top:4%;
+  left:4%;
+  font-size:18px;
+  background:rgba(0,0,0,.6);
+  padding:10px 20px;
+  border-radius:20px;
+}
+
+/* Vòng quay */
+.wheel-box{
+  position:absolute;
+  width:40%;
+  aspect-ratio:1/1;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+}
+
+#wheel{
+  width:100%;
+  transition:transform 4s cubic-bezier(.17,.67,.17,1);
+}
+
+/* Ba lô */
+.inventory{
+  position:absolute;
+  top:10%;
+  right:3%;
+  width:260px;
+  background:rgba(0,0,0,.75);
+  border:2px solid gold;
+  border-radius:16px;
+  padding:10px;
+  display:none;
+}
+.inventory h3{text-align:center;margin-bottom:10px;}
+.inventory div{font-size:14px;margin:4px 0;}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+<!-- INTRO -->
+<div class="screen active" id="intro">
+  <img src="intro.jpg" class="bg">
+  <button class="btn" onclick="show('lobby')">NG NHP</button>
+</div>
+
+<!-- LOBBY -->
+<div class="screen" id="lobby">
+  <img src="lobby.jpg" class="bg">
+  <div class="hud"> Kim cng: <span id="diamond">9999</span></div>
+  <button class="btn-right" onclick="show('wheel')">VÒNG QUAY VÀNG</button>
+</div>
+
+<!-- WHEEL -->
+<div class="screen" id="wheel">
+  <img src="wheel.png" class="bg" style="opacity:.15">
+
+  <div class="hud">
+     <span id="diamond2">9999</span>
+    <br>
+     <button onclick="toggleBag()">Ba lô</button>
+  </div>
+
+  <div class="wheel-box">
+    <img src="wheel.png" id="wheel">
+  </div>
+
+  <button class="btn" onclick="spin()">QUAY (100 )</button>
+  <button class="btn-right" onclick="show('lobby')">ÓNG</button>
+
+  <div class="inventory" id="bag">
+    <h3> BA LÔ</h3>
+    <div id="items"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+let diamond = 9999;
+let rotation = 0;
+let items = [];
+
+const rewards = [
+  "Súng Huyn Thoi",
+  "Súng ",
+  "Skin Him",
+  "Kim Cng",
+  "Th V"
+];
+
+function show(id){
+  document.querySelectorAll('.screen')
+    .forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function update(){
+  document.getElementById('diamond').innerText = diamond;
+  document.getElementById('diamond2').innerText = diamond;
+}
+
+function spin(){
+  if(diamond < 100){
+    alert("Không  kim cng!");
+    return;
+  }
+  diamond -= 100;
+  update();
+
+  let extra = 360 * 5 + Math.floor(Math.random()*360);
+  rotation += extra;
+  document.getElementById('wheel').style.transform =
+    `rotate(${rotation}deg)`;
+
+  let reward = rewards[Math.floor(Math.random()*rewards.length)];
+  setTimeout(()=>{
+    items.push(reward);
+    renderBag();
+    alert(" Bn nhn c: " + reward);
+  },4000);
+}
+
+function toggleBag(){
+  let b = document.getElementById('bag');
+  b.style.display = b.style.display==="block"?"none":"block";
+}
+
+function renderBag(){
+  let box = document.getElementById('items');
+  box.innerHTML = "";
+  items.forEach(i=>{
+    let d = document.createElement("div");
+    d.innerText = "• " + i;
+    box.appendChild(d);
+  });
+}
+
+update();
+</script>
+
+</body>
+</html>
