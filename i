@@ -40,7 +40,7 @@ body{
   object-fit:cover;
 }
 
-/* Nút */
+/* NÃºt */
 .btn{
   position:absolute;
   left:50%;
@@ -80,7 +80,7 @@ body{
   border-radius:20px;
 }
 
-/* Vòng quay */
+/* VÃ²ng quay */
 .wheel-box{
   position:absolute;
   width:40%;
@@ -95,7 +95,7 @@ body{
   transition:transform 4s cubic-bezier(.17,.67,.17,1);
 }
 
-/* Ba lô */
+/* Ba lÃ´ */
 .inventory{
   position:absolute;
   top:10%;
@@ -126,7 +126,7 @@ body{
 <div class="screen" id="lobby">
   <img src="lobby.jpg" class="bg">
   <div class="hud"> Kim cng: <span id="diamond">9999</span></div>
-  <button class="btn-right" onclick="show('wheel')">VÒNG QUAY VÀNG</button>
+  <button class="btn-right" onclick="show('wheel')">VÃ’NG QUAY VÃ€NG</button>
 </div>
 
 <!-- WHEEL -->
@@ -136,7 +136,7 @@ body{
   <div class="hud">
      <span id="diamond2">9999</span>
     <br>
-     <button onclick="toggleBag()">Ba lô</button>
+     <button onclick="toggleBag()">Ba lÃ´</button>
   </div>
 
   <div class="wheel-box">
@@ -144,10 +144,10 @@ body{
   </div>
 
   <button class="btn" onclick="spin()">QUAY (100 )</button>
-  <button class="btn-right" onclick="show('lobby')">ÓNG</button>
+  <button class="btn-right" onclick="show('lobby')">Ã“NG</button>
 
   <div class="inventory" id="bag">
-    <h3> BA LÔ</h3>
+    <h3> BA LÃ”</h3>
     <div id="items"></div>
   </div>
 </div>
@@ -160,8 +160,8 @@ let rotation = 0;
 let items = [];
 
 const rewards = [
-  "Súng Huyn Thoi",
-  "Súng ",
+  "SÃºng Huyn Thoi",
+  "SÃºng ",
   "Skin Him",
   "Kim Cng",
   "Th V"
@@ -180,7 +180,7 @@ function update(){
 
 function spin(){
   if(diamond < 100){
-    alert("Không  kim cng!");
+    alert("KhÃ´ng  kim cng!");
     return;
   }
   diamond -= 100;
@@ -209,7 +209,7 @@ function renderBag(){
   box.innerHTML = "";
   items.forEach(i=>{
     let d = document.createElement("div");
-    d.innerText = "• " + i;
+    d.innerText = "â€¢ " + i;
     box.appendChild(d);
   });
 }
@@ -218,4 +218,5 @@ update();
 </script>
 
 </body>
+
 </html>
